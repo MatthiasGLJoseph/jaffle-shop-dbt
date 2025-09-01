@@ -15,3 +15,25 @@ sources:
       loaded_at_field: _batched_at
     tables:
       - name: payment
+        columns:
+          - name: id
+            data_tests:
+              - unique
+              - not_null
+          - name: orderid
+            data_tests:
+              - not_null
+              - relationships:
+                  to: ref('stg_jaffle_shop__orders')
+                  field: order_id
+          - name: paymentmethod
+            data_tests:
+              - accepted_values:
+                  values: ['bank_transfer', 'coupon', 'credit_card', 'gift_card']
+          - name: status
+            data_tests:
+              - accepted_values:
+                  values: ['fail', 'success']
+          - name: created
+            data_tests:
+              - not_null
