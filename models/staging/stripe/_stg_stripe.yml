@@ -1,21 +1,26 @@
 models:
   - name: stg_stripe__payments
+    description: One payment per row
     columns:
       - name: payment_id
+        description: Primary key
         data_tests:
           - unique
           - not_null
       - name: order_id
+        description: Foreign key, Primary key of ref Jaffle_shop Orders
         data_tests:
           - not_null
           - relationships:
               to: ref('stg_jaffle_shop__orders')
               field: order_id
       - name: payment_method
+        description: "{{ doc('payments__paymentmethod') }}"
         data_tests:
           - accepted_values:
               values: ['bank_transfer', 'coupon', 'credit_card', 'gift_card']
       - name: status
+        description: "{{ doc('payments__status') }}"
         data_tests:
           - accepted_values:
               values: ['fail', 'success']
@@ -23,8 +28,10 @@ models:
         data_tests:
           - not_null
   - name: stg_stripe__order_payments
+    description: One order per row
     columns:
       - name: order_id
+        description: Primary and Foreign key, Primary key of ref Jaffle_shop Orders
         data_tests:
           - unique
           - not_null
